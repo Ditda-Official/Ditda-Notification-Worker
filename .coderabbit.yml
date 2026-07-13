@@ -1,0 +1,26 @@
+language: ko-KR
+
+early_access: true
+enable_free_tier: true
+reviews:
+  profile: chill
+  request_changes_workflow: true
+  high_level_summary: true
+  high_level_summary_placeholder: '@coderabbitai summary'
+  auto_title_placeholder: '@coderabbitai'
+  review_status: true
+  commit_status: true
+  poem: false
+  collapse_walkthrough: true
+  changed_files_summary: true
+  labeling_instructions: [ ]
+
+  tools:
+    shellcheck:
+      enabled: true
+    github-checks:
+      enabled: true
+    biome: { enabled: false }
+    swiftlint: { enabled: false }
+    phpstan: { enabled: false }
+    golangci-lint: { enabled: false }
