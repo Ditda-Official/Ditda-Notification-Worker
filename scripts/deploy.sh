@@ -49,7 +49,11 @@ echo "    로드된 환경변수: ${PARAM_COUNT}개"
 
 # === 필수 환경변수 검증 ===
 REQUIRED_VARS=(
-
+# RabbitMQ
+"RABBITMQ_HOST"
+"RABBITMQ_PORT"
+"RABBITMQ_USERNAME"
+"RABBITMQ_PASSWORD"
 )
 
 MISSING=()
