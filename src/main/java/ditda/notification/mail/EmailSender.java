@@ -56,7 +56,10 @@ public class EmailSender {
 
 	private String renderTemplate(String templateName, Map<String, Object> variables) {
 		Context context = new Context();
-		variables.forEach(context::setVariable);
+		if (variables != null) {
+			variables.forEach(context::setVariable);
+		}
+
 		return templateEngine.process(templateName, context);
 	}
 }
