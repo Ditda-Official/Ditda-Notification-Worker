@@ -34,8 +34,12 @@
         </div>
         <div style="margin: 8px 0;">
             <span style="display: inline-block; width: 100px; color: #888; font-size: 14px;">마감 형태</span>
-            <span style="font-weight: 600; color: #e53e3e;" th:if="${isCancelled}">지원자 0명 (외주 취소)</span>
-            <span style="font-weight: 600; color: #3182ce;" th:unless="${isCancelled}">정원 미달 (부분 환불 진행)</span>
+            <span th:switch="${reason}">
+                <span style="font-weight: 600;" th:case="'APPLICATION_CANCELLED'">지원자 0명 (외주 취소)</span>
+                <span style="font-weight: 600;" th:case="'APPLICATION_SHORTFALL'">정원 미달 (부분 환불 진행)</span>
+                <span style="font-weight: 600;" th:case="'FIRST_DRAFT_ZERO'">1차 시안 전원 미제출 (외주 취소)</span>
+                <span style="font-weight: 600;" th:case="'FIRST_DRAFT_SHORTFALL'">일부 시안 미제출 (부분 환불 진행)</span>
+            </span>
         </div>
         <div style="margin: 8px 0; border-top: 1px solid #e2e8f0; padding-top: 8px;">
             <span style="display: inline-block; width: 100px; color: #888; font-weight: 600; font-size: 14px;">환불 요청액</span>
