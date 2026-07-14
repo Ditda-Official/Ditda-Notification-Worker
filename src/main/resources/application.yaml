@@ -1,3 +1,23 @@
 spring:
   application:
     name: notification-worker
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+
+  config:
+    import: optional:file:.env[.properties]
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 2s
+          multiplier: 2
+          max-interval: 10s
+          max-retries: 3
+        default-requeue-rejected: false
