@@ -35,7 +35,7 @@
         <div style="margin: 8px 0;">
             <span style="display: inline-block; width: 90px; color: #888; font-size: 14px;">환불 금액</span>
             <span style="font-weight: 600; color: #874fff;"
-                  th:text="${#numbers.formatInteger(refundAmount, 3, 'COMMA')} + '원'"></span>
+                  th:text="${#numbers.formatInteger(refundAmount, 1, 'COMMA')} + '원'"></span>
         </div>
     </div>
 

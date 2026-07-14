@@ -72,7 +72,7 @@
             <div style="margin: 4px 0;">
                 <span style="display: inline-block; width: 110px; color: #888; font-size: 14px;">정산 금액</span>
                 <span style="font-weight: 700; color: #874fff;"
-                      th:text="${#numbers.formatInteger(payout.amount, 3, 'COMMA')} + '원'"></span>
+                      th:text="${#numbers.formatInteger(payout.amount, 1, 'COMMA')} + '원'"></span>
             </div>
         </div>
 
@@ -80,7 +80,7 @@
             <div style="margin: 4px 0;">
                 <span style="display: inline-block; width: 110px; color: #222; font-size: 14px; font-weight: 700;">총 정산 금액</span>
                 <span style="font-weight: 800; color: #874fff; font-size: 18px;"
-                      th:text="${#numbers.formatInteger(totalAmount, 3, 'COMMA')} + '원'"></span>
+                      th:text="${#numbers.formatInteger(totalAmount, 1, 'COMMA')} + '원'"></span>
             </div>
         </div>
     </div>

@@ -34,7 +34,7 @@
         </div>
         <div style="margin: 8px 0;">
             <span style="display: inline-block; width: 90px; color: #888; font-size: 14px;">금액</span>
-            <span style="font-weight: 600;" th:text="${#numbers.formatInteger(amount, 0, 'COMMA')} + '원'"></span>
+            <span style="font-weight: 600;" th:text="${#numbers.formatInteger(amount, 1, 'COMMA')} + '원'"></span>
         </div>
         <div style="margin: 8px 0;">
             <span style="display: inline-block; width: 90px; color: #888; font-size: 14px;">통보 시각</span>
