@@ -3,3 +3,8 @@ spring:
     listener:
       simple:
         auto-startup: false
+
+  mail:
+    host: localhost
+    username: test
+    password: test
