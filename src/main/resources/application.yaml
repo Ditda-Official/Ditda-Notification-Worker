@@ -19,5 +19,20 @@ spring:
           initial-interval: 2s
           multiplier: 2
           max-interval: 10s
-          max-retries: 3
+          max-retries: 2
         default-requeue-rejected: false
+
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 10000
+          writetimeout: 10000
