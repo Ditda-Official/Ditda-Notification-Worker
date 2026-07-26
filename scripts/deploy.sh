@@ -60,6 +60,10 @@ REQUIRED_VARS=(
 "MAIL_PORT"
 "MAIL_USERNAME"
 "MAIL_PASSWORD"
+
+# Tracing
+"OTLP_TRACING_ENABLED"
+"OTLP_TRACING_ENDPOINT"
 )
 
 MISSING=()
@@ -81,14 +85,7 @@ echo "    필수 환경변수 ${#REQUIRED_VARS[@]}개 모두 존재 확인"
 
 # === 컨테이너 교체 ===
 echo "[4/5] 컨테이너 교체"
-docker rm -f ditda-notification-worker 2>/dev/null || true
-docker run -d --name ditda-notification-worker \
-  --network ditda-net \
-  --restart unless-stopped \
-  --env-file .env \
-  -p 127.0.0.1:8083:8080 \
-  "${ECR_REGISTRY}:${IMAGE_TAG}"
-
+docker compose -f docker-compose.prod.yaml up -d
 
 # === Health Check ===
 echo "[5/5]  Health Check"
