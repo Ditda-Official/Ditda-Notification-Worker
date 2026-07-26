@@ -1,84 +1,90 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '4.0.6'
-	id 'io.spring.dependency-management' version '1.1.7'
-	id 'com.google.cloud.tools.jib' version '3.5.3'
-	id 'checkstyle'
+    id 'java'
+    id 'org.springframework.boot' version '4.0.6'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'com.google.cloud.tools.jib' version '3.5.3'
+    id 'checkstyle'
 }
 
 group = 'ditda'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	// web
-	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    // web
+    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 
-	// rabbitMQ
-	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    // rabbitMQ
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
 
-	// email
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    // email
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
-	// actuator
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    // monitoring
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
-	// lombok
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testCompileOnly 'org.projectlombok:lombok'
-	testAnnotationProcessor 'org.projectlombok:lombok'
+    // tracing
+    implementation 'org.springframework.boot:spring-boot-micrometer-tracing-opentelemetry'
+    implementation 'io.micrometer:micrometer-tracing-bridge-otel'
+    implementation 'io.opentelemetry:opentelemetry-exporter-otlp'
 
-	// test
-	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-amqp-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-thymeleaf-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+    // test
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-amqp-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-thymeleaf-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 // CheckStyle
 checkstyle {
-	toolVersion = '13.4.1'
-	configFile = file("${rootDir}/config/checkstyle/checkstyle-rules.xml")
-	configProperties = [
-			'suppressionFile': "${rootDir}/config/checkstyle/checkstyle-suppressions.xml"
-	]
-	maxWarnings = 0
+    toolVersion = '13.4.1'
+    configFile = file("${rootDir}/config/checkstyle/checkstyle-rules.xml")
+    configProperties = [
+            'suppressionFile': "${rootDir}/config/checkstyle/checkstyle-suppressions.xml"
+    ]
+    maxWarnings = 0
 }
 
 
 // Jib
 jib {
-	from {
-		image = 'eclipse-temurin:21-jre-alpine'
-		platforms {
-			platform {
-				architecture = 'amd64'
-				os = 'linux'
-			}
-		}
-	}
-	container {
-		ports = ['8080']
-		environment = [
-				'TZ': 'Asia/Seoul'
-		]
-		jvmFlags = ['-Xms256m', '-Xmx256m', '-XX:+UseG1GC']
-		creationTime = 'USE_CURRENT_TIMESTAMP'
-	}
+    from {
+        image = 'eclipse-temurin:21-jre-alpine'
+        platforms {
+            platform {
+                architecture = 'amd64'
+                os = 'linux'
+            }
+        }
+    }
+    container {
+        ports = ['8080']
+        environment = [
+                'TZ': 'Asia/Seoul'
+        ]
+        jvmFlags = ['-Xms256m', '-Xmx256m', '-XX:+UseG1GC']
+        creationTime = 'USE_CURRENT_TIMESTAMP'
+    }
 }
 
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }

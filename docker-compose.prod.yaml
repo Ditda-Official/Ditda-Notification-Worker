@@ -1,0 +1,18 @@
+services:
+  ditda-notification-worker:
+    image: ${ECR_REGISTRY}:${IMAGE_TAG:-latest}
+    container_name: ditda-notification-worker
+    restart: unless-stopped
+    labels:
+      ditda.logs.app: "ditda"
+      ditda.logs.service: "ditda-notification-worker"
+    ports:
+      - "127.0.0.1:8083:8080"
+    env_file: .env
+    networks:
+      - ditda-net
+
+
+networks:
+  ditda-net:
+    external: true

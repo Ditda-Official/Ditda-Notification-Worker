@@ -8,3 +8,9 @@ spring:
     host: localhost
     username: test
     password: test
+
+management:
+  tracing:
+    export:
+      otlp:
+        enabled: false
