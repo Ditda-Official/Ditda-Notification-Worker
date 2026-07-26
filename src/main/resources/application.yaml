@@ -1,6 +1,6 @@
 spring:
   application:
-    name: notification-worker
+    name: ditda-notification-worker
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:local}
 
@@ -36,3 +36,35 @@ spring:
           connectiontimeout: 5000
           timeout: 10000
           writetimeout: 10000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus
+
+  endpoint:
+    health:
+      show-details: never
+
+  otlp:
+    metrics:
+      export:
+        enabled: false
+
+  opentelemetry:
+    tracing:
+      export:
+        otlp:
+          endpoint: ${OTLP_TRACING_ENDPOINT:http://localhost:4318/v1/traces}
+
+  tracing:
+    sampling:
+      probability: 1.0
+    export:
+      otlp:
+        enabled: ${OTLP_TRACING_ENABLED}
+
+  metrics:
+    tags:
+      application: ${spring.application.name}
