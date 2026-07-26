@@ -77,6 +77,8 @@ jobs:
               'export AWS_REGION=${{ env.AWS_REGION }}',
               'export ECR_REGISTRY=${ECR_REGISTRY}',
               'export IMAGE_TAG=${IMAGE_TAG}',
+              'export GITHUB_REPO=${{ github.repository }}',
+              'export COMMIT_SHA=${{ github.event.workflow_run.head_sha }}',
               'bash /tmp/deploy.sh'
             ]" \
             --timeout-seconds 600 \

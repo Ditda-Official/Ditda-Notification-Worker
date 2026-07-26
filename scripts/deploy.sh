@@ -5,6 +5,8 @@ set -euo pipefail
 AWS_REGION="${AWS_REGION:-ap-northeast-2}"
 ECR_REGISTRY="${ECR_REGISTRY:?ERROR: ECR_REGISTRY must be set}"
 IMAGE_TAG="${IMAGE_TAG:-latest}"
+GITHUB_REPO="${GITHUB_REPO:?ERROR: GITHUB_REPO must be set}"
+COMMIT_SHA="${COMMIT_SHA:-main}"
 
 APP_DIR="/home/ubuntu/notification-worker"
 mkdir -p "$APP_DIR"
@@ -13,6 +15,11 @@ cd "$APP_DIR"
 echo "=== Ditda Notification Worker 배포 ==="
 echo "Image: ${ECR_REGISTRY}:${IMAGE_TAG}"
 
+# === 최신 설정 파일 fetch (GitHub raw) ===
+echo "[0/5] 설정 파일 가져오기"
+RAW_BASE="https://raw.githubusercontent.com/${GITHUB_REPO}/${COMMIT_SHA}"
+
+curl -fsSL "${RAW_BASE}/docker-compose.prod.yaml" -o docker-compose.prod.yaml
 
 # === ECR 로그인 ===
 echo "[1/5] ECR 로그인"
